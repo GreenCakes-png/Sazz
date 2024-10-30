@@ -22,9 +22,9 @@ namespace Neo.SmartContract.Template
         {
             if(!Runtime.Transaction.Sender.Equals(GetManager()))
                 return;
+
+            //Is runtime check possible ?
             
-            if (IsOwner() == false)
-                throw new InvalidOperationException("No Authorization!");
             Nep17Token.Burn(player, BalanceOf(player));
         }
     }
