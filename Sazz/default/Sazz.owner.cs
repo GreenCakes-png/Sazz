@@ -12,16 +12,12 @@ namespace Neo.SmartContract.Template
     public partial class Sazz : Nep17Token
     {
         private const byte Prefix_Owner = 0xff;
-        private const byte Prefix_Manager = 0xff;
 
         [Safe]
         public static UInt160 GetOwner()
         {
             return (UInt160)Storage.Get(new[] { Prefix_Owner });
         }
-
-        [Safe]
-        public static UInt160 GetManager() => (UInt160)Storage.Get(new[] { Prefix_Manager });
 
         private static bool IsOwner() =>
             Runtime.CheckWitness(GetOwner());
@@ -41,14 +37,6 @@ namespace Neo.SmartContract.Template
             UInt160 previous = GetOwner();
             Storage.Put(new[] { Prefix_Owner }, newOwner);
             OnSetOwner(previous, newOwner);
-        }
-
-        public static void SetManager(UInt160 manager)
-        {
-            if (IsOwner() == false)
-                throw new InvalidOperationException("No Authorization!");
-
-            Storage.Put(new[] { Prefix_Manager }, manager);
         }
     }
 }
