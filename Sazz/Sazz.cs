@@ -20,12 +20,18 @@ namespace Neo.SmartContract.Template
     {
         public static void Reset(UInt160 player)
         {
-            if(!Runtime.Transaction.Sender.Equals(GetManager()))
-                return;
+            ExecutionEngine.Assert(Runtime.CallingScriptHash == GetCoach(), "?");
+            ExecutionEngine.Assert(Runtime.CheckWitness(Runtime.Transaction.Sender), "??");
 
-            //Is runtime check possible ?
-            
             Nep17Token.Burn(player, BalanceOf(player));
+        }
+
+        public static void MintAndTransfer(UInt160 to)
+        {
+            ExecutionEngine.Assert(Runtime.CallingScriptHash == GetCoach(), "?");
+            ExecutionEngine.Assert(Runtime.CheckWitness(Runtime.Transaction.Sender), "??");
+
+            Nep17Token.Mint(to, 200000000000);
         }
     }
 }
