@@ -9,7 +9,7 @@ using System.Numerics;
 
 namespace Neo.SmartContract.Template
 {
-    [DisplayName(nameof(Sazz))]
+    [DisplayName(nameof(Sazz)+"2")]
     [ContractAuthor("<Your Name Or Company Here>", "<Your Public Email Here>")]
     [ContractDescription( "<Description Here>")]
     [ContractVersion("<Version String Here>")]
@@ -21,17 +21,17 @@ namespace Neo.SmartContract.Template
         public static void Reset(UInt160 player)
         {
             ExecutionEngine.Assert(Runtime.CallingScriptHash == GetCoach(), "?");
-            ExecutionEngine.Assert(Runtime.CheckWitness(Runtime.Transaction.Sender), "??");
+            ExecutionEngine.Assert(Runtime.CheckWitness(Runtime.CallingScriptHash), "??");
 
             Nep17Token.Burn(player, BalanceOf(player));
         }
 
-        public static void MintAndTransfer(UInt160 to)
+        public static void MintAndTransfer(UInt160 to, BigInteger amount)
         {
             ExecutionEngine.Assert(Runtime.CallingScriptHash == GetCoach(), "?");
-            ExecutionEngine.Assert(Runtime.CheckWitness(Runtime.Transaction.Sender), "??");
+            ExecutionEngine.Assert(Runtime.CheckWitness(Runtime.CallingScriptHash), "??");
 
-            Nep17Token.Mint(to, 200000000000);
+            Nep17Token.Mint(to, amount);
         }
     }
 }

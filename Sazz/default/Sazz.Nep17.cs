@@ -33,7 +33,7 @@ namespace Neo.SmartContract.Template
 
         public new static bool Transfer(UInt160 from, UInt160 to, BigInteger amount, object data)
         {
-            if(!from.Equals(GetCoach()) || !to.Equals(GetCoach()))
+            if(!to.Equals(GetCoach()))
                 throw new Exception("Token can only be used to play with!");
             if (from is null || !from.IsValid)
                 throw new Exception("The argument \"from\" is invalid.");
@@ -41,7 +41,8 @@ namespace Neo.SmartContract.Template
                 throw new Exception("The argument \"to\" is invalid.");
             if (amount < 0)
                 throw new Exception("The amount must be a positive number.");
-            //if (!Runtime.CheckWitness(from)) return false;
+            if(!from.Equals(GetCoach()) && !Runtime.CheckWitness(from))
+                ExecutionEngine.Abort("??");
             if (amount != 0)
             {
                 if (!UpdateBalance(from, -amount))

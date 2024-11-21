@@ -11,7 +11,7 @@ namespace Neo.SmartContract.Template
 {
     public partial class Sazz : Nep17Token
     {
-        private const byte Prefix_Coach = 0xff;
+        private const byte Prefix_Coach = 0xab;
 
         [Safe]
         public static UInt160 GetCoach() => (UInt160)Storage.Get(new[] { Prefix_Coach });
